@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Students</h2>
+
+<form method="post" action="{{ url_for('students_add') }}">
+  <label>Name: <input type="text" name="name" required></label>
+  <label>Email: <input type="email" name="email"></label>
+  <button type="submit">Add Student</button>
+</form>
+
+<table>
+  <thead>
+    <tr><th>ID</th><th>Name</th><th>Email</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+  {% for s in students %}
+    <tr>
+      <td>{{ s.id }}</td>
+      <td>{{ s.name }}</td>
+      <td>{{ s.email or "" }}</td>
+      <td>
+        <a href="{{ url_for('students_edit', sid=s.id) }}">Edit</a>
+        <form class="inline" method="post" action="{{ url_for('students_delete', sid=s.id) }}">
+          <button type="submit" onclick="return confirm('Delete this student?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Courses</h2>
+
+<form method="post" action="{{ url_for('courses_add') }}">
+  <label>Code: <input type="text" name="code" required></label>
+  <label>Title: <input type="text" name="title" required></label>
+  <button type="submit">Add Course</button>
+</form>
+
+<table>
+  <thead>
+    <tr><th>ID</th><th>Code</th><th>Title</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+  {% for c in courses %}
+    <tr>
+      <td>{{ c.id }}</td>
+      <td>{{ c.code }}</td>
+      <td>{{ c.title }}</td>
+      <td>
+        <a href="{{ url_for('courses_edit', cid=c.id) }}">Edit</a>
+        <form class="inline" method="post" action="{{ url_for('courses_delete', cid=c.id) }}">
+          <button type="submit" onclick="return confirm('Delete this course?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

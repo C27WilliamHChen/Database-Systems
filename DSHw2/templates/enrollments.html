@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Enrollments</h2>
+
+<form method="post" action="{{ url_for('enrollments_add') }}">
+  <label>Student:
+    <select name="student_id" required>
+      <option value="">-- choose --</option>
+      {% for s in students %}
+        <option value="{{ s.id }}">{{ s.name }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>Course:
+    <select name="course_id" required>
+      <option value="">-- choose --</option>
+      {% for c in courses %}
+        <option value="{{ c.id }}">{{ c.code }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>Term:
+    <input type="text" name="term" placeholder="e.g., Fall 2025" required>
+  </label>
+
+  <button type="submit">Add Enrollment</button>
+</form>
+
+<table>
+  <thead>
+    <tr><th>ID</th><th>Student</th><th>Course</th><th>Title</th><th>Term</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+  {% for e in enrollments %}
+    <tr>
+      <td>{{ e.id }}</td>
+      <td>{{ e.student_name }}</td>
+      <td>{{ e.course_code }}</td>
+      <td>{{ e.course_title }}</td>
+      <td>{{ e.term }}</td>
+      <td>
+        <form class="inline" method="post" action="{{ url_for('enrollments_delete', eid=e.id) }}">
+          <button type="submit" onclick="return confirm('Delete this enrollment?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

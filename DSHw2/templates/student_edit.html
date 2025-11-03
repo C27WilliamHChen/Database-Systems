@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Student #{{ student.id }}</h2>
+
+<form method="post" action="{{ url_for('students_edit', sid=student.id) }}">
+  <p>
+    <label>Name:<br>
+      <input type="text" name="name" value="{{ student.name }}" required>
+    </label>
+  </p>
+  <p>
+    <label>Email:<br>
+      <input type="email" name="email" value="{{ student.email or '' }}">
+    </label>
+  </p>
+  <p>
+    <button type="submit">Save</button>
+    <a href="{{ url_for('students_list') }}">Cancel</a>
+  </p>
+</form>
+{% endblock %}

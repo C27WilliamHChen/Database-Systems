@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ title or "HW2 App" }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+    nav a { margin-right: 12px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background: #f4f4f4; text-align: left; }
+    .flash-ok { color: #0a7; }
+    .flash-error { color: #c00; }
+    form.inline { display: inline; }
+    input, button { padding: 6px 8px; }
+    .container { max-width: 920px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('students_list') }}">Students</a>
+      <a href="{{ url_for('courses_list') }}">Courses</a>
+      <a href="{{ url_for('enrollments_list') }}">Enrollments</a>
+      <a href="{{ url_for('report') }}">JOIN Report</a>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for cat, msg in messages %}
+            <li class="flash-{{ 'ok' if cat=='ok' else 'error' }}">{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>JOIN Report: Students × Courses × Enrollments</h2>
+<table>
+  <thead>
+    <tr><th>Student</th><th>Course</th><th>Title</th><th>Term</th></tr>
+  </thead>
+  <tbody>
+  {% for r in rows %}
+    <tr>
+      <td>{{ r.student_name }}</td>
+      <td>{{ r.course_code }}</td>
+      <td>{{ r.course_title }}</td>
+      <td>{{ r.term }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
