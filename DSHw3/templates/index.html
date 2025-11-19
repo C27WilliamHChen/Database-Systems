@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HW3 – Flight Log (Multi-Entry)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        table { border-collapse: collapse; width: 100%; max-width: 1100px; }
+        th, td { border: 1px solid #999; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        button { padding: 8px 12px; margin-top: 10px; cursor: pointer; }
+        input { width: 100%; padding: 5px; box-sizing: border-box; }
+        h2 { margin-bottom: 5px; }
+        .total { margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+
+<body>
+
+<h2>HW3: Flight Log – Add Multiple Flights</h2>
+<p>Enter one row per flight, then submit them all at once.</p>
+
+<form action="/add" method="POST">
+    <table id="flightTable">
+        <tr>
+            <th>Date</th>
+            <th>Aircraft Type</th>
+            <th>Tail Number</th>
+            <th>Flight Time (hours)</th>
+            <th>Remarks</th>
+        </tr>
+
+        <!-- Initial row -->
+        <tr>
+            <td><input type="date" name="date"></td>
+            <td><input name="aircraft" placeholder="e.g. C-172"></td>
+            <td><input name="tail" placeholder="e.g. N12345"></td>
+            <td><input name="flight_time" placeholder="e.g. 1.3"></td>
+            <td><input name="remarks" placeholder="e.g. Local pattern work"></td>
+        </tr>
+    </table>
+
+    <button type="button" onclick="addRow()">Add Another Row</button>
+    <br><br>
+    <button type="submit">Submit All Flights</button>
+</form>
+
+<hr>
+
+<h3>Logged Flights</h3>
+
+{% if flights %}
+    <div class="total">Total Logged Time: {{ total_hours }} hours</div>
+    <ul>
+        {% for f in flights %}
+            <li>
+                <strong>{{ f.date or "No date" }}</strong> —
+                {{ f.aircraft_type or "Unknown aircraft" }} |
+                Tail: {{ f.tail_number or "N/A" }} |
+                Time: {{ f.flight_time or "0.0" }} hrs |
+                Remarks: {{ f.remarks or "" }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No flights logged yet.</p>
+{% endif %}
+
+<script>
+function addRow() {
+    const table = document.getElementById("flightTable");
+    const row = table.insertRow(-1);
+    row.innerHTML = `
+        <td><input type="date" name="date"></td>
+        <td><input name="aircraft" placeholder="e.g. C-172"></td>
+        <td><input name="tail" placeholder="e.g. N12345"></td>
+        <td><input name="flight_time" placeholder="e.g. 1.3"></td>
+        <td><input name="remarks" placeholder="e.g. Local pattern work"></td>
+    `;
+}
+</script>
+
+</body>
+</html>
