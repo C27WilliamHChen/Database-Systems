@@ -1,17 +1,21 @@
+import os
 from flask import Flask, request, render_template, redirect, url_for
 from pymongo import MongoClient
 
 app = Flask(__name__)
 
 # ===== MongoDB Atlas Connection =====
-MONGO_URI = "mongodb+srv://hw3user:Hw3password123@ntudatabase.qjmdcft.mongodb.net/?appName=NTUDatabase"
+# Read from environment variable in Render / local .env
+MONGO_URI = os.environ.get("MONGO_URI")
+
+if not MONGO_URI:
+    raise RuntimeError("MONGO_URI environment variable is not set")
 
 client = MongoClient(MONGO_URI)
 
 # Database and collection for the flight log
 db = client["hw3db"]
 collection = db["flight_logs"]
-
 
 @app.route("/")
 def index():
