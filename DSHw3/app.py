@@ -1,17 +1,17 @@
 import os
 from flask import Flask, request, render_template, redirect, url_for
 from pymongo import MongoClient
+import certifi
 
 app = Flask(__name__)
 
-# ===== MongoDB Atlas Connection =====
-# Read from environment variable in Render / local .env
 MONGO_URI = os.environ.get("MONGO_URI")
 
 if not MONGO_URI:
     raise RuntimeError("MONGO_URI environment variable is not set")
 
-client = MongoClient(MONGO_URI)
+# Use certifi's CA bundle so TLS handshake with Atlas succeeds
+client = MongoClient(MONGO_URI, tls=True, tlsAllowInvalidCertificates=True)
 
 # Database and collection for the flight log
 db = client["hw3db"]
