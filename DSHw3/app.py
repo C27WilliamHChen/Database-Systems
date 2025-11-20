@@ -6,16 +6,14 @@ import certifi
 app = Flask(__name__)
 
 MONGO_URI = os.environ.get("MONGO_URI")
-
 if not MONGO_URI:
     raise RuntimeError("MONGO_URI environment variable is not set")
 
-# Use certifi's CA bundle so TLS handshake with Atlas succeeds
-client = MongoClient(MONGO_URI, tls=True, tlsAllowInvalidCertificates=True)
+client = MongoClient(MONGO_URI, tlsCAFile=certifi.where())
 
-# Database and collection for the flight log
 db = client["hw3db"]
 collection = db["flight_logs"]
+
 
 @app.route("/")
 def index():
