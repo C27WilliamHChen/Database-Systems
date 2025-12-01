@@ -6,3 +6,5 @@ https://www.youtube.com/shorts/IcWvlJV4Kjw
 https://youtu.be/3G55oO0UMiA
 #Database Systems Hw3 Render
 https://database-systems.onrender.com
+#Database Systems Hw4
+https://www.youtube.com/shorts/jfaBKqHfE2o
